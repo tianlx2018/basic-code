@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <stdint.h>
 /***************************************************************************//**
  * @brief
  *  convert integer to string
@@ -55,6 +55,134 @@ void itoa(int n,char *s)
  *   return the number in precision of double
  ******************************************************************************/
 
+
+
+
+/***************************************************************************//**
+ * @brief
+ *   convert two ascii hex number to hex number
+ *   eg. "AB"->0xAB
+ * @param[in] str data input pointer
+ *
+ * @param[in] pdata data output pointer
+ *
+ * @note
+ *  
+ *   return 0 no error,or error occured
+ ******************************************************************************/
+uint8_t str_to_hex_byte(char *p_str,uint8_t *pdata)
+{
+  uint8_t temp = 0;
+  
+  if(p_str == 0 || pdata == 0)
+    return 1;
+  
+  if(*p_str <= '9' && *p_str >= '0')
+  {
+    temp |= *p_str - '0';
+  }
+  else if(*p_str <= 'F' && *p_str >= 'A')
+  {
+    temp |= (*p_str - 'A'+ 10);
+  }
+  else if(*p_str <= 'f' && *p_str >= 'a')
+  {
+    temp |= (*p_str - 'a'+ 10);
+  }
+  else
+    return 2;		 
+  
+  p_str++;
+  temp <<= 4;
+  
+  if(*p_str <= '9' && *p_str >= '0')
+  {
+    temp |= *p_str - '0';
+  }
+  else if(*p_str <= 'F' && *p_str >= 'A')
+  {
+    temp |= (*p_str - 'A'+ 10);
+  }
+  else if(*p_str <= 'f' && *p_str >= 'a')
+  {
+    temp |= (*p_str - 'a'+ 10);
+  }
+  else
+    return 2;	 
+  
+  *pdata = temp;
+  
+  return 0;
+}
+
+/***************************************************************************//**
+* @brief
+*   convert hex MAC to ascii MAC 
+*   eg. 0x11,0x22,0x33,0x44,0x55,0x66 ->"0x112233445566"
+* @param[in] mac input MAC hex
+*
+* @param[in] string point to result where to store
+*
+* @note
+*  
+******************************************************************************/
+void mac_to_string(uint8_t * mac,char * string)
+{
+  if(mac == 0 || string == 0)
+    return;
+  
+  *string++ = '0';
+  *string++ = 'x';
+  
+  for(uint8_t k = 0;k < 6;k++)
+  {
+    if((*mac >> 4) > 9)
+      *string++ = (*mac >> 4) + 'A' - 10;
+    else
+      *string++ = (*mac >> 4) + '0';
+    
+    if((*mac & 0X0F) > 9)
+      *string++ = (*mac++ & 0X0F) + 'A' - 10;
+    else
+      *string++ = (*mac++ & 0X0F) + '0';			 
+  }
+}
+
+/***************************************************************************//**
+* @brief
+*   convert ascii MAC hex MAC
+*   eg. "112233445566"->0x11,0x22,0x33,0x44,0x55,0x66
+* @param[in] string input ascii
+*
+* @param[in] mac data output pointer
+*
+* @note
+* return 1 pointer error
+* return 2 string input format error
+* return 0 error none
+******************************************************************************/
+uint8_t string_to_mac_hex(char * string,uint8_t * mac)
+{
+  if(mac == 0 || string == 0)
+    return 1;
+  
+  string+= 2;
+  
+  for(uint8_t k = 0;k < 6;k++)
+  {
+    if(str_to_hex_byte(string,mac))
+      break;
+    
+    string+=2;
+    mac++;
+  }
+  
+  return 0;
+}
+
+
+
+/////////////////////////////////TEST///////////////////////////////////////////
 float num = 0;
 int num2 = 0;
 

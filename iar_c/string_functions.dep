@@ -13,6 +13,7 @@
       <file>$TOOLKIT_DIR$\lib\shs_l.a</file>
       <file>$TOOLKIT_DIR$\lib\dl4t_tlf.a</file>
       <file>$PROJ_DIR$\Debug\Obj\main_string.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
       <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
       <file>$TOOLKIT_DIR$\config\generic.icf</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
@@ -34,7 +35,7 @@
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 15</file>
+          <file> 16</file>
         </tool>
       </outputs>
     </file>
@@ -53,11 +54,11 @@
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 16 0 14 19 9 20 17 11 2 18 21</file>
+          <file> 17 0 15 20 10 21 18 12 2 19 22 7</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 17 14 19 18 21 0 2 16 11 9 20</file>
+          <file> 0 20 15 7 2 22 19 17 18 12 10 21</file>
         </tool>
       </inputs>
     </file>
@@ -66,13 +67,13 @@
       <outputs>
         <tool>
           <name>OBJCOPY</name>
-          <file> 10</file>
+          <file> 11</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ILINK</name>
-          <file> 8 1 4 7 3 5</file>
+          <file> 9 1 4 8 3 5</file>
         </tool>
       </inputs>
     </file>
