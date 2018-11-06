@@ -4,47 +4,6 @@
 
 /***************************************************************************//**
  * @brief
- *   Configure GPIO external pin interrupt.
- *
- * @details
- *   If reconfiguring a GPIO interrupt that is already enabled, it is generally
- *   recommended to disable it first, see GPIO_Disable().
- *
- *   The actual GPIO interrupt handler must be in place before enabling the
- *   interrupt.
- *
- *   Notice that any pending interrupt for the selected pin is cleared by this
- *   function.
- *
- * @note
- *   On platform 1 devices the interrupt number parameter is not used. The
- *   interrupt number used on these devices is hardwired to the same number as
- *   the pin number. @n
- *   On platform 2 devices, interrupt number can be selected freely within the
- *   same group as pin number, the groups are 0-3, 4-7, 8-11 and 12-15.
- *
- * @param[in] port
- *   The port to associate with @p pin.
- *
- * @param[in] pin
- *   The pin number on the port.
- *
- * @param[in] intNo
- *   The interrupt number to trigger.
- *
- * @param[in] risingEdge
- *   Set to true if interrupts shall be enabled on rising edge, otherwise false.
- *
- * @param[in] fallingEdge
- *   Set to true if interrupts shall be enabled on falling edge, otherwise false.
- *
- * @param[in] enable
- *   Set to true if interrupt shall be enabled after configuration completed,
- *   false to leave disabled. See GPIO_IntDisable() and GPIO_IntEnable().
- ******************************************************************************/
-
-/***************************************************************************//**
- * @brief
  *  convert integer to string
  * 
  * @note max 20 digit!  
