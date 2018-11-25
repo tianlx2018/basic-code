@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 /***************************************************************************//**
  * @brief
  *  convert integer to string
@@ -199,7 +200,7 @@ uint8_t string_to_mac_hex(char * string,uint8_t * mac)
 ******************************************************************************/
 int8_t ms_slice_string(char *src,char *dst1,char *dst2,char* dst3)
 {
-#define MAX_LENGTH 10
+#define MAX_DEV_LEN 10
   
   uint8_t count = 0;
   
@@ -247,56 +248,100 @@ int8_t ms_slice_string(char *src,char *dst1,char *dst2,char* dst3)
   return 0;		
 }
 
+int32_t get_steps(char *p_src)
+{
+  if(*p_src == 0)//no parameters
+    return 0;
 
-/////////////////////////////////TEST///////////////////////////////////////////
-float num = 0;
-int num2 = 0;
+  if(p_src[0] == 'R')
+  {
+    return 0X7FFFFFFF;
+  }
+  else if(p_src[0] == 'L')
+  {
+    return 0X80000000;
+  }
+  else
+  {
+    return atoi(p_src);   
+  }
+}
 
+
+int32_t  get_dev_addr(char *p_src)
+{
+  if(*p_src == 0)//no parameters
+    return 0;//local
+
+  if(strcmp(p_src,"ALL") == 0)
+  {
+    return 0xff;
+  }
+  else
+  {
+    return atoi(p_src);   
+  }
+}
+
+//return 0,error
+uint8_t  get_speed(char *p_src)
+{
+  if(p_src[0] == '1')
+  {
+    return 3;
+  }
+  else if(p_src[0] == '2')
+  {
+    return 6;//2~30
+  }
+  else if(p_src[0] == '3')
+  {
+    return 12;//2~30
+  }
+  else if(p_src[0] == '4')
+  {
+    return 24;//2~30
+  }
+  else  
+    return 0;
+}
+
+
+char at_motor_run(char * value)
+{
+  //input string
+  //<STEP>,<SPEED>,<ADDR>
+#define MAX_PARA_LEN    11
+  char str_step[MAX_PARA_LEN] = {0};
+  char str_speed[MAX_PARA_LEN] = {0};
+  char str_addr[MAX_PARA_LEN] = {0};
+
+  int8_t ret = ms_slice_string(value,str_step,str_speed,str_addr);
+  
+  if(ret != 0)
+    return 0;//ERROR
+
+  int steps = get_steps(str_step);
+
+  uint8_t speed = get_speed(str_speed);
+  
+  uint8_t addr = get_dev_addr(str_addr);
+
+  return 0;
+}
 
 //main functions for demo or test cases
+char input1[] = "100";//case 1
+char input2[] = "100,3";//case 1
+char input3[] = "100,3,12";//case 1
+char input4[] = "100,,12";//case 1
+
 int main(void)
 {
-  /* double atof(const char *str) */
-#if 0
-  char num_str[] = "3.15x15926x";
-  char num_str2[] = "3.1215926";
-  char num_str3[] = "3.1015926";
-
-  
-  num = atof(num_str);
-  
-  num = atof(num_str2);
-  
-  num = atof(num_str3);
-#endif
-  
-  /* int atoi(const char *str) */
-  
-#if 0
-  char num_str1[] = "32";
-  char num_str2[] = "-320";
-  char num_str3[] = "0x12";//must integer
-  
-  num2 = atoi(num_str1);
-  
-  num2 = atoi(num_str2);
-  
-  num2 = atoi(num_str3);
-#endif 
-  
-  /* void itoa(int n,char *s) */
-#if 1
-  char num_str[10] = {0};
-  int num3 = 1003;
-  
-  itoa(num3,num_str);
-  
-  num3 = -10023;
-  
-  itoa(num3,num_str);
-#endif   
-  
-  
+  at_motor_run(input1);
+  at_motor_run(input2);
+  at_motor_run(input3);
+  at_motor_run(input4);
   
   while(1)
   {
