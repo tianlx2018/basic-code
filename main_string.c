@@ -180,6 +180,72 @@ uint8_t string_to_mac_hex(char * string,uint8_t * mac)
   return 0;
 }
 
+/***************************************************************************//**
+* @brief
+*  slice string into three part with ','
+*  eg. "abc,efg,higk"->dst1 "abc",dst2 "efg", dst3 "higk"
+*  sub string must not excced MAX_LENGTH
+* @param[in] src:string input
+*
+* @param[in] dst1:string out
+*
+* @param[in] dst2:string out
+*
+* @param[in] dst3:string out
+* 
+* return -1 pointer error
+* return -2 length error
+* return 0 error none
+******************************************************************************/
+int8_t ms_slice_string(char *src,char *dst1,char *dst2,char* dst3)
+{
+#define MAX_LENGTH 10
+  
+  uint8_t count = 0;
+  
+  if(dst1 == 0 || src == 0 || dst2 == 0 || dst3 == 0)//if pointer null
+    return -1;
+  
+  while(*src != 0 && *src != ',')
+  {
+    *dst1++ = *src++;
+    count++;//count for bytes
+    if(count > MAX_DEV_LEN)
+      return -2;
+  }
+  
+  if(*src == 0)//if reach end of string
+    return 0;
+  else if(*src == ',')//if reach delimiter symbol
+    src++;
+  
+  count = 0;
+  
+  while(*src != 0 && *src != ',')
+  {
+    *dst2++ = *src++;
+    count++;//count for bytes
+    if(count > MAX_DEV_LEN)
+      return -2;
+  }	
+  
+  if(*src == 0)
+    return 0;
+  else if(*src == ',')
+    src++;	
+  
+  count = 0;
+  
+  while(*src != 0 && *src != ',')
+  {
+    *dst3++ = *src++;
+    count++;//count for bytes
+    if(count > MAX_DEV_LEN)
+      return -2;
+  }	
+  
+  return 0;		
+}
 
 
 /////////////////////////////////TEST///////////////////////////////////////////
