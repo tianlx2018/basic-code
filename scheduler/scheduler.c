@@ -1,5 +1,3 @@
-
-
 #include "scheduler.h"
 
 static task_t *p_task_array = NULL;
@@ -10,7 +8,7 @@ u_int32_t scheduler_init(task_t *p_task,uint32_t task_number)
     p_task_array = p_task;
     task_number = task_number;
 
-    return 
+    return
 }
 
 u_int32_t scheduler_run(void)
@@ -30,7 +28,11 @@ u_int32_t scheduler_run(void)
     return ERR_SCHD_NONE;
 }
 
-scheduler_error_t scheduler_event_emit(uint32_t task_handler,uint32_t evt,void *p_context);
+scheduler_error_t scheduler_event_emit(uint32_t task_handler,uint32_t evt,void *p_context)
+{
+
+    return ERR_SCHD_NONE;
+}
 
 
 void timer_create(void)
@@ -39,13 +41,13 @@ void timer_create(void)
 }
 void timer_start(void)
 {
-    
+
 }
 void timer_stop(void)
 {
-    
+
 }
 void timer_scheduler(void)
 {
-    
+
 }

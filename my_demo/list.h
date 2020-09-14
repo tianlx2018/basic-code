@@ -8,16 +8,13 @@
 #define ERR_LIST_MEM_FAILED             0xfe
 #define ERR_LIST_LENGTH_ZERO            0xfc
 
-struct list_node
-{
-    int data;
-    struct list_node *p_next;
-};
+typedef struct  {
+    list_hdr_t *p_prev;
+    list_hdr_t *p_next;
+}list_hdr_t;
 
-typedef struct list_node list_node_t;
-
-uint8_t list_dynamic_add(list_node_t *p,int data_init);//initialize a list with length and return the pointer p
-
-void list_test(void);
-
+list_hdr_t * list_init(void);
+int  list_add_to_tail(list_hdr_t *p_tail);
+int  list_add_to_head(list_hdr_t *p_head);
+int  list_destory(list_hdr_t *p_list_hdr);
 #endif // _LIST_H

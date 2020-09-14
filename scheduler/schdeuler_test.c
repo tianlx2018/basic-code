@@ -1,27 +1,27 @@
 #include "stdio.h"
 #include "scheduler.h"
 
-u_int32_t my_task_fun1(u_int32_t evt,void *p_context)
+uint32_t my_task_fun1(uint32_t evt,void *p_context)
 {
     log_info("task 1 excuting");
 
-    if(evt & 0x0001)
-    {
-
-    }
+//    if(evt & 0x0001)
+//    {
+//
+//    }
 
     return 0;
 }
 
 
-u_int32_t my_task_fun2(u_int32_t evt,void *p_context)
+uint32_t my_task_fun2(uint32_t evt,void *p_context)
 {
     log_info("task 2 excuting");
     return 0;
 }
 
 
-u_int32_t my_task_fun3(u_int32_t evt,void *p_context)
+uint32_t my_task_fun3(uint32_t evt,void *p_context)
 {
     log_info("task 3 excuting");
     return 0;

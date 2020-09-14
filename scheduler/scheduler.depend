@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1599909986 source:c:\users\tianlx\desktop\basic-code.git\scheduler\schdeuler_test.c
+	"stdio.h"
+	"scheduler.h"
+
+1599910077 c:\users\tianlx\desktop\basic-code.git\scheduler\scheduler.h
+	"stdio.h"
+	"stdint.h"
+
+1599915385 source:c:\users\tianlx\desktop\basic-code.git\scheduler\main.c
+	<stdio.h>
+	<stdlib.h>
+

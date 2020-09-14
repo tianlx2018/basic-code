@@ -1,5 +1,5 @@
-#ifndef _SCHDULER_H
-#define _SCHDULER_H
+#ifndef _SCHDULER_H_
+#define _SCHDULER_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,12 +17,12 @@ typedef enum{
     ERR_SCHD_INVALID_PARAM
 }scheduler_error_t;
 
-typedef u_int32_t (*p_task_t)(u_int32_t evt,void *p_context);
+typedef uint32_t (*p_task_t)(uint32_t evt,void *p_context);
 
-typedef struct 
+typedef struct
 {
     p_task_t p_fun;
-    u_int32_t event;
+    uint32_t event;
     void * p_context;
 }task_t;
 
@@ -37,4 +37,4 @@ void timer_scheduler(void);
 #ifdef __cplusplus
 }
 #endif
-#endif/*_SCHDULER_H*/
+#endif/*_SCHDULER_H_*/

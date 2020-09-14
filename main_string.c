@@ -13,33 +13,33 @@
  * 
  * @param[in] s point to string buffer
  ******************************************************************************/
-void itoa(int n,char *s)
-{
-  int i = 0,j = 0,sign = n;
-  char temp[20] = {0};
-
-  if(s == 0)
-    return;
-  
-  if(n < 0)
-    n =-n;//使n成为正数
-  
-  do
-  {
-    temp[i++] = n % 10 + '0';//取下一个数字
-  }while ((n /= 10) > 0);//删除该数字
-  
-  if(sign < 0)
-    temp[i] = '-';
-  else
-    i--;
-  
-  for(j = i; j >= 0; j--)//生成的数字是逆序的，所以要逆序输出
-  {
-    *s++ = temp[j];
-    //printf("%c",s[j]);
-  }  
-} 
+//void itoa(int n,char *s)
+//{
+//  int i = 0,j = 0,sign = n;
+//  char temp[20] = {0};
+//
+//  if(s == 0)
+//    return;
+//  
+//  if(n < 0)
+//    n =-n;//使n成为正数
+//  
+//  do
+//  {
+//    temp[i++] = n % 10 + '0';//取下一个数字
+//  }while ((n /= 10) > 0);//删除该数字
+//  
+//  if(sign < 0)
+//    temp[i] = '-';
+//  else
+//    i--;
+//  
+//  for(j = i; j >= 0; j--)//生成的数字是逆序的，所以要逆序输出
+//  {
+//    *s++ = temp[j];
+//    //printf("%c",s[j]);
+//  }  
+//} 
 
 /***************************************************************************//**
  * @brief
@@ -336,12 +336,30 @@ char input2[] = "100,3";//case 1
 char input3[] = "100,3,12";//case 1
 char input4[] = "100,,12";//case 1
 
+
+#define LOG(...) printf(__VA_ARGS__)
+
+//void log_fatal(uint32_t module_id,  char *p_str, ...)
+//{
+//  LOG(p_str,...);
+//}
+
+
+
+
 int main(void)
 {
-  at_motor_run(input1);
-  at_motor_run(input2);
-  at_motor_run(input3);
-  at_motor_run(input4);
+//  at_motor_run(input1);
+//  at_motor_run(input2);
+//  at_motor_run(input3);
+//  at_motor_run(input4);
+  #include <stdlib.h>
+  LOG("hello %d\r\n", 10);
+  
+    int number = 123456;
+    char string[25];
+    itoa(number,string,10);
+    printf("integer=%d string=%s\n", number, string);
   
   while(1)
   {
