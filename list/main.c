@@ -55,6 +55,7 @@ list_t *list_new(void)
     return p_list;
 }
 
+
 list_t *list_get_next(list_t *p)
 {
     //assert(LIST_PTR_VALID(p)) ;
