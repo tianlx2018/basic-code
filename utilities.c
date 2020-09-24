@@ -1,4 +1,4 @@
-#include <sys/types.h>
+#include "utilities.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -171,7 +171,7 @@ uint8_t num_to_asc(uint16_t Num, uint8_t *pData)
   }
 
   length += 1;
-  *pData++ = Num;
+  *pData++ = (uint8_t)Num;
 #else
   if (Num / 1000)
   {
@@ -242,62 +242,62 @@ uint8_t num_to_asc(uint16_t Num, uint8_t *pData)
 //  }  
 //} 
 
-/***************************************************************************//**
- * @brief
- *   convert two ascii hex number to hex number
- *   eg. "AB"->0xAB
- * @param[in] str data input pointer
- *
- * @param[in] pdata data output pointer
- *
- * @note
- *  
- * @return 0 no error,or error occured
- ******************************************************************************/
-uint8_t str_to_hex_byte(char *p_str,uint8_t *pdata)
-{
-  uint8_t temp = 0;
-  
-  if(p_str == 0 || pdata == 0)
-    return 1;
-  
-  if(*p_str <= '9' && *p_str >= '0')
-  {
-    temp |= *p_str - '0';
-  }
-  else if(*p_str <= 'F' && *p_str >= 'A')
-  {
-    temp |= (*p_str - 'A'+ 10);
-  }
-  else if(*p_str <= 'f' && *p_str >= 'a')
-  {
-    temp |= (*p_str - 'a'+ 10);
-  }
-  else
-    return 2;		 
-  
-  p_str++;
-  temp <<= 4;
-  
-  if(*p_str <= '9' && *p_str >= '0')
-  {
-    temp |= *p_str - '0';
-  }
-  else if(*p_str <= 'F' && *p_str >= 'A')
-  {
-    temp |= (*p_str - 'A'+ 10);
-  }
-  else if(*p_str <= 'f' && *p_str >= 'a')
-  {
-    temp |= (*p_str - 'a'+ 10);
-  }
-  else
-    return 2;	 
-  
-  *pdata = temp;
-  
-  return 0;
-}
+///***************************************************************************//**
+// * @brief
+// *   convert two ascii hex number to hex number
+// *   eg. "AB"->0xAB
+// * @param[in] str data input pointer
+// *
+// * @param[in] pdata data output pointer
+// *
+// * @note
+// *  
+// * @return 0 no error,or error occured
+// ******************************************************************************/
+//uint8_t str_to_hex_byte(char *p_str,uint8_t *pdata)
+//{
+//  uint8_t temp = 0;
+//  
+//  if(p_str == 0 || pdata == 0)
+//    return 1;
+//  
+//  if(*p_str <= '9' && *p_str >= '0')
+//  {
+//    temp |= *p_str - '0';
+//  }
+//  else if(*p_str <= 'F' && *p_str >= 'A')
+//  {
+//    temp |= (*p_str - 'A'+ 10);
+//  }
+//  else if(*p_str <= 'f' && *p_str >= 'a')
+//  {
+//    temp |= (*p_str - 'a'+ 10);
+//  }
+//  else
+//    return 2;		 
+//  
+//  p_str++;
+//  temp <<= 4;
+//  
+//  if(*p_str <= '9' && *p_str >= '0')
+//  {
+//    temp |= *p_str - '0';
+//  }
+//  else if(*p_str <= 'F' && *p_str >= 'A')
+//  {
+//    temp |= (*p_str - 'A'+ 10);
+//  }
+//  else if(*p_str <= 'f' && *p_str >= 'a')
+//  {
+//    temp |= (*p_str - 'a'+ 10);
+//  }
+//  else
+//    return 2;	 
+//  
+//  *pdata = temp;
+//  
+//  return 0;
+//}
 
 /***************************************************************************//**
 * @brief
@@ -442,7 +442,7 @@ int8_t string_slice(char *src,char *dst1,char *dst2,char* dst3)
   */
 uint8_t num_bcd_to_ascii(uint8_t *pBCD,uint8_t *pASCII,uint16_t length)
 {
-  if(IsBcdValid(pBCD,length))
+  if(is_bcd_valid(pBCD,length))
     return 1;
   else
   {
@@ -465,12 +465,12 @@ uint8_t num_bcd_to_ascii(uint8_t *pBCD,uint8_t *pASCII,uint16_t length)
   * @retval how many bytes conversed
   * @test ok
   */
-uint8_t num_bcd_to_dec_batch(uint8_t const *pBcdCode,uint8_t *pDecCode,uint16_t Length)
+uint32_t num_bcd_to_dec_batch(uint8_t const *pBcdCode,uint8_t *pDecCode,uint16_t Length)
 {
   uint8_t temp = 0;
   uint8_t temp2 = 0;
     
-  for(uint16_t k = 0; k < Length; ++k)
+  for(uint32_t k = 0; k < Length; ++k)
   {
     temp = *pBcdCode >> 4;
     temp2 = *pBcdCode++ & 0x0f;
@@ -489,11 +489,11 @@ uint8_t num_bcd_to_dec_batch(uint8_t const *pBcdCode,uint8_t *pDecCode,uint16_t 
             uint8_t *pBcdCode,
             uint16_t Length
   * @retval how many bytes conversed
-  * @test ok
+  * @example
   */
-uint8_t num_dec_to_bcd_batch(uint8_t const *pDecCode,uint8_t *pBcdCode,uint16_t Length)
+uint32_t num_dec_to_bcd_batch(uint8_t const *pDecCode,uint8_t *pBcdCode,uint16_t Length)
 {   
-  for(uint16_t k = 0; k < Length; ++k)
+  for(uint32_t k = 0; k < Length; ++k)
   {        
     if(*pDecCode > 99)
       return k;
@@ -554,8 +554,7 @@ void time_to_bcd(uint32_t Second,uint8_t *pTimeBCD)
   
   time_to_dec(Second,TimeDec);
   
-  num_dec_to_bcd_batch(TimeDec,pTimeBCD,3);
-        
+  num_dec_to_bcd_batch(TimeDec,pTimeBCD,3);        
 }
 
 /**
@@ -663,7 +662,7 @@ uint8_t is_bcd_valid(const uint8_t *const pBcd,uint32_t Length)
   */
 uint8_t is_bcd_time_valid(uint8_t const *pTimeBCD)
 {
-  if(is_bcd_time_valid(pTimeBCD,3))
+  if(is_bcd_valid(pTimeBCD,3))
     return 1;//error
   
   if(*pTimeBCD > 0x23 || *(pTimeBCD+1) > 0x59 || *(pTimeBCD+2) > 0x59)
